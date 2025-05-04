@@ -1,0 +1,16 @@
+# General
+.DS_Store
+.env
+*.log
+
+# Seeds folder
+seeds/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Backend
+backend/node_modules/
+backend/logs/
+backend/.env
