@@ -125,10 +125,7 @@ function Campgrounds({ apiPath, title, userLoading }) {
                 )}
 
                 {!userLoading && loading ? (
-                    <CampgroundListLoadingSkeleton
-                        apiPath={apiPath}
-                        userLoading={userLoading}
-                    />
+                    <CampgroundListLoadingSkeleton />
                 ) : campgrounds.length > 0 ? (
                     <>
                         {campgrounds.map((camp, index) => (
