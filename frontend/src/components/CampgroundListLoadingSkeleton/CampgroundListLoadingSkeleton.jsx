@@ -1,13 +1,13 @@
 import { useUser } from "../../contexts/userContext";
 
-function CampgroundListLoadingSkeleton({ apiPath }) {
+function CampgroundListLoadingSkeleton({ apiPath, userLoading }) {
     const skeletonCount = 6; // Change this number if you want more or fewer skeletons
     const skeletonArray = new Array(skeletonCount).fill(0); // Create an array of the desired length
     const { user } = useUser();
 
     return (
         <>
-            {!user && apiPath === "/campgrounds" ? (
+            {!userLoading && !user && apiPath === "/campgrounds" ? (
                 <div className="mb-4">
                     <div className="card shadow-sm border-0">
                         <div className="card-body text-center placeholder-glow">
