@@ -102,20 +102,11 @@ export default function App() {
                     <Route
                         path="/campgrounds"
                         element={
-                            userLoading ? (
-                                <div className="container mt-4">
-                                    <h1 className="text-center display-4">
-                                        Explore Camps
-                                    </h1>
-                                    <CampgroundListLoadingSkeleton apiPath="/campgrounds" />
-                                </div>
-                            ) : (
-                                <Campgrounds
-                                    apiPath="/campgrounds"
-                                    title="Explore Camps"
-                                    userLoading={userLoading}
-                                />
-                            )
+                            <Campgrounds
+                                apiPath="/campgrounds"
+                                title="Explore Camps"
+                                userLoading={userLoading}
+                            />
                         }
                     />
 
