@@ -10,6 +10,7 @@ const LoginForm = ({ fetchCurrentUser }) => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,6 +18,9 @@ const LoginForm = ({ fetchCurrentUser }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        setError("");
+
         try {
             const res = await api.post("/auth/login", formData);
             const { token } = res.data;
@@ -34,6 +38,8 @@ const LoginForm = ({ fetchCurrentUser }) => {
             }, 100);
         } catch (err) {
             setError(err.response?.data?.error || "Login failed");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -106,8 +112,20 @@ const LoginForm = ({ fetchCurrentUser }) => {
                             <button
                                 type="submit"
                                 className="btn btn-success w-100"
+                                disabled={loading}
                             >
-                                Login
+                                {loading ? (
+                                    <div
+                                        className="spinner-border spinner-border-sm"
+                                        role="status"
+                                    >
+                                        <span className="visually-hidden">
+                                            Loading...
+                                        </span>
+                                    </div>
+                                ) : (
+                                    "Login"
+                                )}
                             </button>
                         </form>
                     </div>
