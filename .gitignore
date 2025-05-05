@@ -6,6 +6,7 @@
 
 # Seeds folder
 seeds/
+node_modules/
 
 # Frontend
 frontend/node_modules/

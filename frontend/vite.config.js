@@ -11,7 +11,7 @@ export default defineConfig({
             "/api": "http://localhost:3000",
         },
         allowedHosts: [
-            "ff9f-2407-d000-f-77db-5c21-2a9c-72f-ea49.ngrok-free.app",
+            "7beb-2407-d000-f-77db-7920-336d-120a-6012.ngrok-free.app",
         ],
     },
 });
