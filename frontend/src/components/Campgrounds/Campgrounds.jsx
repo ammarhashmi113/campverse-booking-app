@@ -4,6 +4,7 @@ import CampgroundCard from "./CampgroundCard/CampgroundCard";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../contexts/userContext";
 import { toast, ToastContainer } from "react-toastify";
+import CampgroundListLoadingSkeleton from "../CampgroundListLoadingSkeleton/CampgroundListLoadingSkeleton";
 
 function Campgrounds({ apiPath, title, userLoading }) {
     const { user } = useUser();
@@ -124,7 +125,7 @@ function Campgrounds({ apiPath, title, userLoading }) {
                 )}
 
                 {loading ? (
-                    <p className="text-center">Loading...</p>
+                    <CampgroundListLoadingSkeleton apiPath={apiPath} />
                 ) : campgrounds.length > 0 ? (
                     <>
                         {campgrounds.map((camp, index) => (

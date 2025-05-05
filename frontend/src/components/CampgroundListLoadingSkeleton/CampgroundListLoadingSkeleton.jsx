@@ -7,7 +7,7 @@ function CampgroundListLoadingSkeleton({ apiPath }) {
 
     return (
         <>
-            {/* {!user && apiPath === "/campgrounds" ? (
+            {!user && apiPath === "/campgrounds" ? (
                 <div className="mb-4">
                     <div className="card shadow-sm border-0">
                         <div className="card-body text-center placeholder-glow">
@@ -22,7 +22,7 @@ function CampgroundListLoadingSkeleton({ apiPath }) {
                 </div>
             ) : (
                 ""
-            )} */}
+            )}
 
             {user ? (
                 <div className="btn btn-secondary disabled placeholder col-2 mb-0"></div>
