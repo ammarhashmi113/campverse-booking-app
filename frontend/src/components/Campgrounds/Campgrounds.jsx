@@ -124,7 +124,7 @@ function Campgrounds({ apiPath, title, userLoading }) {
                     </div>
                 )}
 
-                {loading ? (
+                {!userLoading && loading ? (
                     <CampgroundListLoadingSkeleton
                         apiPath={apiPath}
                         userLoading={userLoading}
