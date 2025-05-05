@@ -7,6 +7,7 @@ const RegisterForm = ({ onLogin }) => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,6 +15,9 @@ const RegisterForm = ({ onLogin }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        setError("");
+
         try {
             const res = await api.post("/auth/register", formData);
             const { token, user } = res.data;
@@ -29,6 +33,8 @@ const RegisterForm = ({ onLogin }) => {
             });
         } catch (err) {
             setError(err.response?.data?.error || "Registration failed");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -97,8 +103,23 @@ const RegisterForm = ({ onLogin }) => {
                                 required
                             />
                         </div>
-                        <button type="submit" className="btn btn-primary w-100">
-                            Signup
+                        <button
+                            type="submit"
+                            className="btn btn-primary w-100"
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <div
+                                    className="spinner-border spinner-border-sm"
+                                    role="status"
+                                >
+                                    <span className="visually-hidden">
+                                        Loading...
+                                    </span>
+                                </div>
+                            ) : (
+                                "Register"
+                            )}
                         </button>
                     </form>
                 </div>
