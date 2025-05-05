@@ -98,7 +98,7 @@ const RegisterForm = ({ onLogin }) => {
                             />
                         </div>
                         <button type="submit" className="btn btn-primary w-100">
-                            Register
+                            Signup
                         </button>
                     </form>
                 </div>
