@@ -24,6 +24,10 @@ mongoose
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.log(err));
 
+app.get("/api/health", (req, res) => {
+    res.send("OK");
+});
+
 // Authentication Routes
 app.use("/api/auth", authRoutes);
 
