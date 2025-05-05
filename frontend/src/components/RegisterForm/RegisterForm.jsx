@@ -3,7 +3,7 @@ import api from "../../api/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const RegisterForm = ({ onLogin }) => {
+const RegisterForm = ({ fetchCurrentUser }) => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -23,14 +23,17 @@ const RegisterForm = ({ onLogin }) => {
             const { token, user } = res.data;
 
             localStorage.setItem("token", token);
-            onLogin(user);
-            navigate("/campgrounds", {
-                replace: true,
-                state: {
-                    message: "Registration successful!",
-                    type: "success",
-                },
-            });
+            await fetchCurrentUser();
+            // Show success toast
+            setTimeout(() => {
+                navigate("/campgrounds", {
+                    replace: true,
+                    state: {
+                        message: "Registration successful.",
+                        type: "success",
+                    },
+                });
+            }, 100);
         } catch (err) {
             setError(err.response?.data?.error || "Registration failed");
         } finally {

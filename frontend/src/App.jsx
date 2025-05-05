@@ -24,7 +24,6 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import RegisterForm from "./components/RegisterForm/RegisterForm";
 import AddCampgroundForm from "./components/AddCampgroundForm/AddCampgroundForm";
 import EditCampgroundForm from "./components/EditCampgroundForm/EditCampgroundForm";
-import CampgroundListLoadingSkeleton from "./components/CampgroundListLoadingSkeleton/CampgroundListLoadingSkeleton";
 import CampgroundBookingPage from "./components/CampgroundBookingPage/CampgroundBookingPage";
 import NotFound from "./components/NotFound/NotFound";
 
@@ -173,7 +172,9 @@ export default function App() {
                             user ? (
                                 <Navigate to="/campgrounds" />
                             ) : (
-                                <RegisterForm onLogin={setUser} />
+                                <RegisterForm
+                                    fetchCurrentUser={fetchCurrentUser}
+                                />
                             )
                         }
                     />
