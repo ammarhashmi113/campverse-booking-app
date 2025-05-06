@@ -2,10 +2,10 @@
 
 Campverse is a full-stack web application where users can host and book campgrounds. It features JWT-based user authentication, role-based access control, booking management, reviews, and responsive UI with toast notifications and route protection. Built using modern web technologies, Campverse provides both a robust backend and an intuitive frontend for a seamless user experience.
 
-## 🌍 Live Link
+## 🌍 Live Links
 
-🌐 **Live App:** [https://campverse-booking-app.vercel.app](https://campverse-booking-app.vercel.app)  
-🛠️ **Backend API:** [https://campverse-booking-app.onrender.com](https://campverse-booking-app.onrender.com)
+-   🌐 [Live App](https://campverse-booking-app.vercel.app)
+-   🛠️ [Backend API](https://campverse-booking-app.onrender.com)
 
 ---
 
