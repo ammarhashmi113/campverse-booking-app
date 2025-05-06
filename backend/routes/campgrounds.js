@@ -11,15 +11,6 @@ const validateCampgroundWithJoi = require("../utils/validateCampgroundWithJoi");
 const validateReviewWithJoi = require("../utils/validateReviewWithJoi");
 const validateBookingWithJoi = require("../utils/validateBookingWithJoi");
 
-// // GET all campgrounds
-// router.get(
-//     "/campgrounds",
-//     catchAsync(async (req, res) => {
-//         const campgrounds = await Campground.find({}).sort({ _id: -1 }).lean();
-//         res.json(campgrounds);
-//     })
-// );
-
 // GET all campgrounds with pagination
 router.get(
     "/campgrounds",
@@ -53,21 +44,6 @@ router.get(
         });
     })
 );
-
-// // GET All Campgrounds by current logged in user
-// router.get(
-//     "/campgrounds/me",
-//     isAuthenticated,
-//     catchAsync(async (req, res, next) => {
-//         // req.user._id.toString() !== campFound.owner.toString()
-//         console.log("ME ROUTE WAS HIT");
-//         const loggedInUserId = req.user._id.toString();
-//         const campgrounds = await Campground.find({ owner: loggedInUserId })
-//             .sort({ _id: -1 })
-//             .lean();
-//         res.json(campgrounds);
-//     })
-// );
 
 // GET All Campgrounds by current logged in user with Pagination
 router.get(

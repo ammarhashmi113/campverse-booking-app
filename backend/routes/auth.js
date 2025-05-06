@@ -12,41 +12,6 @@ router.get("/me", isAuthenticated, async (req, res) => {
     res.json({ user: req.user });
 });
 
-// // Register a new user
-// router.post(
-//     "/register",
-//     catchAsync(async (req, res, next) => {
-//         const { username, email, password } = req.body;
-
-//         // Check if the email already exists
-//         const emailExists = await User.findOne({ email });
-//         if (emailExists) {
-//             return next(new AppError("Email already registered", 400));
-//         }
-
-//         // Check if the username already exists
-//         const usernameExists = await User.findOne({ username });
-//         if (usernameExists) {
-//             return next(new AppError("Username already in use", 400));
-//         }
-
-//         // Create a new user
-//         const user = new User({
-//             username,
-//             email,
-//             password,
-//         });
-
-//         await user.save();
-
-//         // Send success response (you can also return some user info if needed)
-//         res.status(201).json({
-//             status: "success",
-//             message: "User registered successfully!",
-//         });
-//     })
-// );
-
 router.post(
     "/register",
     catchAsync(async (req, res, next) => {

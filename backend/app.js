@@ -7,11 +7,22 @@ const authRoutes = require("./routes/auth");
 require("dotenv").config();
 const AppError = require("./utils/AppError");
 const cors = require("cors");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method")); // for form data
 app.use(express.json()); // for json data
+app.use(helmet()); // for security headers
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+app.use(limiter);
 
 const allowedOrigins = [
     "https://campverse-booking-app.vercel.app", // Vercel frontend URL
