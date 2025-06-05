@@ -122,11 +122,12 @@ function BookingCard({ booking, refreshBookings, readOnly = false }) {
                             <li>
                                 <i className="bi bi-person-circle me-2"></i>
                                 <strong>Username:</strong>{" "}
-                                {booking.user.username}
+                                {booking.user?.username || "Unknown User"}
                             </li>
                             <li>
                                 <i className="bi bi-envelope me-2"></i>
-                                <strong>Email:</strong> {booking.user.email}
+                                <strong>Email:</strong>{" "}
+                                {booking.user?.email || "No email provided"}
                             </li>
                         </ul>
                     </div>
