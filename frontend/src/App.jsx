@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // Components
 import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 import Home from "./components/HomePage/HomePage";
 import Campgrounds from "./components/Campgrounds/Campgrounds";
 import IncomingRequests from "./components/Bookings/IncomingRequests/IncomingRequests";
@@ -80,106 +81,121 @@ export default function App() {
     return (
         <Router>
             <UserContext.Provider value={{ user, setUser }}>
-                <Navbar setUser={setUser} userLoading={userLoading} />
-                <ToastContainer style={{ marginTop: "4rem" }} />
-                <Routes>
-                    <Route path="/" element={<Home />} />
+                <div className="d-flex flex-column min-vh-100">
+                    <Navbar setUser={setUser} userLoading={userLoading} />
+                    <ToastContainer style={{ marginTop: "4rem" }} />
+                    <main className="flex-grow-1">
+                        <Routes>
+                            <Route path="/" element={<Home />} />
 
-                    {/* Putting More specific route FIRST */}
-                    <Route
-                        path="/campgrounds/my-campgrounds"
-                        element={
-                            <Campgrounds
-                                apiPath="/campgrounds/me"
-                                title="My Listings"
-                                userLoading={userLoading}
+                            {/* Putting More specific route FIRST */}
+                            <Route
+                                path="/campgrounds/my-campgrounds"
+                                element={
+                                    <Campgrounds
+                                        apiPath="/campgrounds/me"
+                                        title="My Listings"
+                                        userLoading={userLoading}
+                                    />
+                                }
                             />
-                        }
-                    />
 
-                    {/* Standard campgrounds list */}
-                    <Route
-                        path="/campgrounds"
-                        element={
-                            <Campgrounds
-                                apiPath="/campgrounds"
-                                title="Explore Camps"
-                                userLoading={userLoading}
+                            {/* Standard campgrounds list */}
+                            <Route
+                                path="/campgrounds"
+                                element={
+                                    <Campgrounds
+                                        apiPath="/campgrounds"
+                                        title="Explore Camps"
+                                        userLoading={userLoading}
+                                    />
+                                }
                             />
-                        }
-                    />
 
-                    {/* Campground Create */}
-                    <Route
-                        path="/campgrounds/new"
-                        element={<AddCampgroundForm />}
-                    />
+                            {/* Campground Create */}
+                            <Route
+                                path="/campgrounds/new"
+                                element={<AddCampgroundForm />}
+                            />
 
-                    {/* Campground Edit */}
-                    <Route
-                        path="/campgrounds/:id/edit"
-                        element={
-                            userLoading ? (
-                                <div className="container mt-4">
-                                    Checking credentials...
-                                </div>
-                            ) : (
-                                <EditCampgroundForm />
-                            )
-                        }
-                    />
+                            {/* Campground Edit */}
+                            <Route
+                                path="/campgrounds/:id/edit"
+                                element={
+                                    userLoading ? (
+                                        <div className="container mt-4">
+                                            Checking credentials...
+                                        </div>
+                                    ) : (
+                                        <EditCampgroundForm />
+                                    )
+                                }
+                            />
 
-                    {/* Campground Book */}
-                    <Route
-                        path="/campgrounds/:id/book"
-                        element={<CampgroundBookingPage />}
-                    />
+                            {/* Campground Book */}
+                            <Route
+                                path="/campgrounds/:id/book"
+                                element={<CampgroundBookingPage />}
+                            />
 
-                    {/* Campground Detail (least specific - putting LAST among campground routes) */}
-                    <Route
-                        path="/campgrounds/:id"
-                        element={
-                            <CampgroundDetail key={user?._id || "guest"} />
-                        }
-                    />
+                            {/* Campground Detail (least specific - putting LAST among campground routes) */}
+                            <Route
+                                path="/campgrounds/:id"
+                                element={
+                                    <CampgroundDetail
+                                        key={user?._id || "guest"}
+                                    />
+                                }
+                            />
 
-                    <Route
-                        path="/incoming-requests"
-                        element={<IncomingRequests userLoading={userLoading} />}
-                    />
+                            <Route
+                                path="/incoming-requests"
+                                element={
+                                    <IncomingRequests
+                                        userLoading={userLoading}
+                                    />
+                                }
+                            />
 
-                    <Route
-                        path="/outgoing-requests"
-                        element={<OutgoingRequests userLoading={userLoading} />}
-                    />
+                            <Route
+                                path="/outgoing-requests"
+                                element={
+                                    <OutgoingRequests
+                                        userLoading={userLoading}
+                                    />
+                                }
+                            />
 
-                    {/* Auth routes */}
-                    <Route
-                        path="/login"
-                        element={
-                            user ? (
-                                <Navigate to="/campgrounds" />
-                            ) : (
-                                <LoginForm
-                                    fetchCurrentUser={fetchCurrentUser}
-                                />
-                            )
-                        }
-                    />
-                    <Route
-                        path="/register"
-                        element={
-                            user ? (
-                                <Navigate to="/campgrounds" />
-                            ) : (
-                                <RegisterForm
-                                    fetchCurrentUser={fetchCurrentUser}
-                                />
-                            )
-                        }
-                    />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
+                            {/* Auth routes */}
+                            <Route
+                                path="/login"
+                                element={
+                                    user ? (
+                                        <Navigate to="/campgrounds" />
+                                    ) : (
+                                        <LoginForm
+                                            fetchCurrentUser={fetchCurrentUser}
+                                        />
+                                    )
+                                }
+                            />
+                            <Route
+                                path="/register"
+                                element={
+                                    user ? (
+                                        <Navigate to="/campgrounds" />
+                                    ) : (
+                                        <RegisterForm
+                                            fetchCurrentUser={fetchCurrentUser}
+                                        />
+                                    )
+                                }
+                            />
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
+                    </main>
+                    <Footer />
+                </div>
             </UserContext.Provider>
         </Router>
     );

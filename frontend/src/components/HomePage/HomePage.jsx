@@ -4,26 +4,8 @@ import api from "../../api/axiosConfig";
 import NewlyAddedCamps from "../../components/NewlyAddedCamps/NewlyAddedCamps";
 
 const HomePage = () => {
-    const [newCamps, setNewCamps] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-
     useEffect(() => {
         document.title = "Campverse - Homepage";
-
-        const fetchNewCamps = async () => {
-            try {
-                const response = await api.get(
-                    "/campgrounds?sort=latest&limit=6"
-                );
-                setNewCamps(response.data);
-                setIsLoading(false);
-            } catch (err) {
-                console.error("Failed to load new campgrounds", err);
-                setIsLoading(false);
-            }
-        };
-
-        fetchNewCamps();
     }, []);
 
     return (
@@ -104,9 +86,8 @@ const HomePage = () => {
             </section>
 
             {/* Newly Added Camps */}
-            {!isLoading && (
-                <NewlyAddedCamps limit={6} title={"Newly Added Camps"} />
-            )}
+
+            <NewlyAddedCamps limit={6} title={"Newly Added Camps"} />
 
             {/* More Campsites */}
             <section className="bg-white py-5">
@@ -202,25 +183,6 @@ const HomePage = () => {
                     </Link>
                 </div>
             </section>
-
-            {/* Footer */}
-            <footer className="bg-dark text-white text-center py-4">
-                <div className="container">
-                    <p className="mb-1">
-                        © {new Date().getFullYear()} Campverse. All rights
-                        reserved.
-                    </p>
-                    <small>
-                        Built with ❤️ by Ammar |{" "}
-                        <a
-                            href="https://github.com/ammarhashmi113"
-                            className="text-white text-decoration-underline"
-                        >
-                            GitHub
-                        </a>
-                    </small>
-                </div>
-            </footer>
         </div>
     );
 };
