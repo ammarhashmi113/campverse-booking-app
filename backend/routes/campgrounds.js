@@ -437,18 +437,50 @@ router.post(
             return next(new AppError("Campground not found", 404));
         }
 
+        console.log("START DATE FROM REQ BODY:", startDate);
+        console.log("END DATE FROM REQ BODY:", endDate);
+
         // Converting to date objects
         let newStartDate = new Date(startDate);
         let newEndDate = new Date(endDate);
+
+        console.log(
+            "NEW START DATE AFTER CONVERTING TO DATE OBJECT:",
+            newStartDate
+        );
+        console.log(
+            "NEW END DATE AFTER CONVERTING TO DATE OBJECT:",
+            newEndDate
+        );
 
         // Normalize both to UTC midnight
         newStartDate.setUTCHours(0, 0, 0, 0);
         newEndDate.setUTCHours(0, 0, 0, 0);
 
+        console.log(
+            "NEW START DATE AFTER NORMALIZING TO UTC MIDNIGHT:",
+            newStartDate
+        );
+        console.log(
+            "NEW END DATE AFTER NORMALIZING TO UTC MIDNIGHT:",
+            newEndDate
+        );
+
         // Checking that the start date is not in the past, otherwise sending error.
         const currentDate = new Date();
+        console.log("CURRENT DATE:", currentDate);
         // Normalize current date to UTC midnight for fair comparison
         currentDate.setUTCHours(0, 0, 0, 0);
+
+        console.log(
+            "CURRENT DATE AFTER NORMALIZING TO UTC MIDNIGHT:",
+            currentDate
+        );
+
+        console.log(
+            "NEW START DATE < CURRENT DATE ? = ",
+            newStartDate < currentDate
+        );
 
         if (newStartDate < currentDate) {
             return next(
