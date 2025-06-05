@@ -7,35 +7,51 @@ function CampgroundListLoadingSkeleton() {
     return (
         <>
             {skeletonArray.map((_, index) => (
-                <div key={index} className="card mt-4 mb-4 shadow-sm">
+                <div
+                    key={index}
+                    className="card mb-4 shadow border-0 rounded-4 overflow-hidden"
+                >
                     <div className="row g-0">
-                        <div className="col-md-4">
-                            <div className="placeholder-glow">
+                        <div className="col-md-5">
+                            <div className="placeholder-glow h-100">
                                 <div
-                                    className="placeholder w-100"
+                                    className="placeholder w-100 h-100"
                                     style={{
-                                        height: "200px",
+                                        height: "100%",
+                                        minHeight: "350px",
                                     }}
                                 ></div>
                             </div>
                         </div>
-                        <div className="col-md-8">
-                            <div className="card-body">
-                                <h5 className="card-title placeholder col-6"></h5>
-                                <p className="card-text placeholder col-11 d-block"></p>
-                                <p className="card-text placeholder col-10 d-block"></p>
-                                <p className="card-text">
-                                    <small className="text-muted placeholder col-4"></small>
+                        <div className="col-md-7 d-flex flex-column justify-content-between p-3">
+                            <div>
+                                <h5 className="placeholder-glow">
+                                    <span className="placeholder col-6 rounded"></span>
+                                </h5>
+                                <p className="placeholder-glow">
+                                    <span className="placeholder col-4 rounded"></span>
                                 </p>
-                                {/* <div className="d-flex justify-content-between">
-                                    <div
-                                        className="placeholder w-100"
-                                        style={{
-                                            height: "10px",
-                                        }}
-                                    ></div>
-                                </div> */}
-                                <div className="btn btn-secondary disabled placeholder col-4 mt-3"></div>
+                                <p className="placeholder-glow">
+                                    <span className="placeholder col-11 rounded d-block mb-2"></span>
+                                </p>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center">
+                                <span
+                                    className="btn btn-secondary disabled placeholder"
+                                    style={{ minWidth: "10.6rem" }}
+                                ></span>
+                                <div className="d-flex gap-1">
+                                    {[...Array(5)].map((_, i) => (
+                                        <span
+                                            key={i}
+                                            className="placeholder rounded-circle"
+                                            style={{
+                                                width: "12px",
+                                                height: "12px",
+                                            }}
+                                        ></span>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>

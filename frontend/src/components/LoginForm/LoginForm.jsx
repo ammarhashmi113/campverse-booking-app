@@ -61,7 +61,7 @@ const LoginForm = ({ fetchCurrentUser }) => {
             <ToastContainer style={{ marginTop: "4rem" }} />
             <div className="container mt-5 d-flex justify-content-center">
                 <div
-                    className="card shadow-sm"
+                    className="card shadow border-0 rounded-4 overflow-hidden"
                     style={{ maxWidth: "400px", width: "100%" }}
                 >
                     <img
