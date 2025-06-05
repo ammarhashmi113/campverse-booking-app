@@ -1,103 +1,274 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import api from "../../api/axiosConfig";
 
 const HomePage = () => {
+    const [newCamps, setNewCamps] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         document.title = "Campverse - Homepage";
+
+        const fetchNewCamps = async () => {
+            try {
+                const response = await api.get(
+                    "/campgrounds?sort=latest&limit=6"
+                );
+                setNewCamps(response.data);
+                console.log(response.data);
+                setIsLoading(false);
+            } catch (err) {
+                console.error("Failed to load new campgrounds", err);
+                setIsLoading(false);
+            }
+        };
+
+        fetchNewCamps();
     }, []);
 
     return (
         <div className="bg-light text-dark">
             {/* Hero Section */}
-            <section className="text-center py-5 bg-success text-white">
+            <section
+                className="text-white text-center d-flex align-items-center"
+                style={{
+                    background:
+                        "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/campgroundHomepage.jpg') center/cover no-repeat",
+                    minHeight: "100vh",
+                }}
+            >
                 <div className="container">
-                    <h1 className="display-4 fw-bold">
-                        Discover Campgrounds Near You
-                    </h1>
+                    <h1 className="display-3 fw-bold">Campverse</h1>
                     <p className="lead mt-3 mb-4">
-                        Explore, review, and book your perfect outdoor getaway
-                        with YelpCamp.
+                        Discover, review & book the best campgrounds worldwide
+                        🌍
                     </p>
                     <Link
                         to="/campgrounds"
-                        className="btn btn-light btn-lg shadow"
+                        className="btn btn-success btn-lg shadow"
                     >
-                        🌄 Explore Campgrounds
+                        🌄 Explore Now
                     </Link>
                 </div>
             </section>
-
-            {/* Features Section */}
+            {/* About Section */}
             <section className="py-5 bg-white">
-                <div className="container">
-                    <div className="row text-center g-4">
-                        <div className="col-md-4">
-                            <div className="card border-0 shadow h-100">
-                                <div className="card-body">
-                                    <div className="display-5 text-success mb-3">
-                                        📍
+                <div className="container text-center">
+                    <h2 className="fw-bold">What is Campverse?</h2>
+                    <p className="lead mt-3">
+                        Campverse is your one-stop destination for outdoor
+                        adventures. Whether you're a camper, traveler, or host —
+                        we connect you to the perfect camping experiences.
+                    </p>
+                </div>
+            </section>
+
+            {/* How it Works Section */}
+            <section className="py-5 bg-light">
+                <div className="container text-center">
+                    <h2 className="fw-bold mb-4">How It Works</h2>
+                    <div className="row g-4">
+                        {[
+                            {
+                                icon: "🔍",
+                                title: "Find",
+                                text: "Search thousands of user-submitted campgrounds.",
+                            },
+                            {
+                                icon: "🛏",
+                                title: "Book",
+                                text: "Instantly request bookings from campground hosts.",
+                            },
+                            {
+                                icon: "✍️",
+                                title: "Review",
+                                text: "Rate and review your experience to guide others.",
+                            },
+                        ].map((step, idx) => (
+                            <div className="col-md-4" key={idx}>
+                                <div className="card border-0 shadow h-100">
+                                    <div className="card-body">
+                                        <div className="display-5 mb-3">
+                                            {step.icon}
+                                        </div>
+                                        <h5 className="card-title">
+                                            {step.title}
+                                        </h5>
+                                        <p className="card-text">{step.text}</p>
                                     </div>
-                                    <h5 className="card-title">
-                                        Find Hidden Gems
-                                    </h5>
-                                    <p className="card-text">
-                                        Browse campgrounds added by users
-                                        worldwide.
-                                    </p>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="card border-0 shadow h-100">
-                                <div className="card-body">
-                                    <div className="display-5 text-warning mb-3">
-                                        ⭐
-                                    </div>
-                                    <h5 className="card-title">
-                                        Share Reviews
-                                    </h5>
-                                    <p className="card-text">
-                                        Rate and review your stays to help other
-                                        campers choose wisely.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="card border-0 shadow h-100">
-                                <div className="card-body">
-                                    <div className="display-5 text-info mb-3">
-                                        🏞
-                                    </div>
-                                    <h5 className="card-title">
-                                        Add Your Campground
-                                    </h5>
-                                    <p className="card-text">
-                                        Share your favorite camping spot with
-                                        the world. Upload photos, location, and
-                                        details in just a few clicks!
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            {/* Quote/Testimonial */}
-            <section className="bg-light py-5">
+            {/* Newly Added Camps */}
+            {!isLoading && (
+                <section className="py-5 bg-white">
+                    <div className="container">
+                        <h2 className="text-center mb-4">
+                            🌟 Newly Added Camps
+                        </h2>
+                        <div className="row g-4">
+                            {newCamps.campgrounds.map((camp) => (
+                                <div className="col-md-4" key={camp._id}>
+                                    {console.log(camp.image)}
+                                    <div className="card h-100 shadow-sm">
+                                        <img
+                                            src={
+                                                camp?.image ||
+                                                "/images/default-camp-image.png"
+                                            }
+                                            className="card-img-top"
+                                            alt={camp.title}
+                                            style={{
+                                                objectFit: "cover",
+                                                height: "200px",
+                                            }}
+                                        />
+                                        <div className="card-body d-flex flex-column">
+                                            <h5 className="card-title">
+                                                {camp.title}
+                                            </h5>
+                                            <p className="card-text text-muted mb-2">
+                                                {camp.location}
+                                            </p>
+                                            <p className="card-text">
+                                                {camp.description?.slice(
+                                                    0,
+                                                    100
+                                                )}
+                                                ...
+                                            </p>
+                                            <Link
+                                                to={`/campgrounds/${camp._id}`}
+                                                className="mt-auto btn btn-success"
+                                            >
+                                                View Campground
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* More Campsites */}
+            <section className="bg-white py-5">
                 <div className="container text-center">
-                    <blockquote className="blockquote">
-                        <p className="fs-4 fst-italic">
-                            "I planned my entire summer trip using YelpCamp.
-                            It’s my go-to for campgrounds now."
-                        </p>
-                        <footer className="blockquote-footer mt-3">
-                            Outdoor Explorer
-                        </footer>
-                    </blockquote>
+                    <h3 className="fw-bold">
+                        Explore 50,000+ unique campsites
+                    </h3>
+                    <p className="mb-4">
+                        Campgrounds you won't find anywhere else.
+                    </p>
+                    <Link
+                        to="/campgrounds"
+                        className="btn btn-outline-success shadow"
+                    >
+                        Explore Now
+                    </Link>
                 </div>
             </section>
+
+            {/* Hosting Section */}
+            <section
+                className="text-white text-center d-flex align-items-center"
+                style={{
+                    background:
+                        "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/host-campground.jpg') center/cover no-repeat",
+                    minHeight: "40vh",
+                }}
+            >
+                <div className="container">
+                    <h1 className="display-3 fw-bold">Host Your Camp</h1>
+                    <p className="lead mt-3 mb-4">
+                        Join our community of outdoor lovers and start earning
+                        from your land or property today.
+                    </p>
+                    <Link
+                        to="/campgrounds/new"
+                        className="btn btn-success btn-lg shadow"
+                    >
+                        Start Hosting
+                    </Link>
+                </div>
+            </section>
+
+            {/* Testimonials */}
+            <section className="py-5 bg-white">
+                <div className="container text-center">
+                    <h2 className="fw-bold mb-4">Testimonials</h2>
+                    <div className="row g-4">
+                        {[
+                            {
+                                name: "Outdoor Explorer",
+                                quote: "I planned my entire summer trip using Campverse. It’s my go-to app now!",
+                            },
+                            {
+                                name: "Nature Lover",
+                                quote: "Thanks to Campverse, I found hidden gems that aren’t even on Google Maps.",
+                            },
+                            {
+                                name: "Camp Host",
+                                quote: "As a host, I love how easy it is to list my campground and accept bookings.",
+                            },
+                        ].map((review, idx) => (
+                            <div className="col-md-4" key={idx}>
+                                <div className="card border-0 shadow h-100">
+                                    <div className="card-body">
+                                        <p className="fst-italic">
+                                            “{review.quote}”
+                                        </p>
+                                        <footer className="blockquote-footer mt-3">
+                                            {review.name}
+                                        </footer>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Final CTA */}
+            <section className="py-5 bg-success text-white text-center">
+                <div className="container">
+                    <h2 className="fw-bold">Ready to start your adventure?</h2>
+                    <p className="lead">
+                        Join Campverse and never miss a great camping spot
+                        again.
+                    </p>
+                    <Link
+                        to="/register"
+                        className="btn btn-light btn-lg shadow"
+                    >
+                        🚀 Get Started
+                    </Link>
+                </div>
+            </section>
+
+            {/* Footer */}
+            <footer className="bg-dark text-white text-center py-4">
+                <div className="container">
+                    <p className="mb-1">
+                        © {new Date().getFullYear()} Campverse. All rights
+                        reserved.
+                    </p>
+                    <small>
+                        Built with ❤️ by Ammar |{" "}
+                        <a
+                            href="https://github.com/ammarhashmi113"
+                            className="text-white text-decoration-underline"
+                        >
+                            GitHub
+                        </a>
+                    </small>
+                </div>
+            </footer>
         </div>
     );
 };
