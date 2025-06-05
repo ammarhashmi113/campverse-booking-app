@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const dayjs = require("dayjs");
 const router = express.Router();
 const Campground = require("../models/campground");
 const Review = require("../models/review");
@@ -424,14 +425,12 @@ router.post(
     validateBookingWithJoi,
     catchAsync(async (req, res, next) => {
         const { id } = req.params;
-        const { startDate, endDate } = req.body.booking; // We expect dates as ISO strings
+        const { startDate, endDate } = req.body.booking;
 
-        // Checking if the ID is valid otherwise sending error
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return next(new AppError("Invalid campground ID", 400));
         }
 
-        // Checking if the campground exists
         const campground = await Campground.findById(id);
         if (!campground) {
             return next(new AppError("Campground not found", 404));
@@ -440,64 +439,26 @@ router.post(
         console.log("START DATE FROM REQ BODY:", startDate);
         console.log("END DATE FROM REQ BODY:", endDate);
 
-        // Converting to date objects
-        let newStartDate = new Date(startDate);
-        let newEndDate = new Date(endDate);
+        const now = dayjs().startOf("day");
+        const newStartDate = dayjs(startDate);
+        const newEndDate = dayjs(endDate);
 
-        console.log(
-            "NEW START DATE AFTER CONVERTING TO DATE OBJECT:",
-            newStartDate
-        );
-        console.log(
-            "NEW END DATE AFTER CONVERTING TO DATE OBJECT:",
-            newEndDate
-        );
+        console.log("CURRENT DATE:", now.format("YYYY-MM-DD"));
+        console.log("NEW START DATE:", newStartDate.format("YYYY-MM-DD"));
+        console.log("NEW END DATE:", newEndDate.format("YYYY-MM-DD"));
 
-        // Normalize both to UTC midnight
-        newStartDate.setHours(0, 0, 0, 0);
-        newEndDate.setHours(0, 0, 0, 0);
-
-        console.log(
-            "NEW START DATE AFTER NORMALIZING TO UTC MIDNIGHT:",
-            newStartDate
-        );
-        console.log(
-            "NEW END DATE AFTER NORMALIZING TO UTC MIDNIGHT:",
-            newEndDate
-        );
-
-        // Checking that the start date is not in the past, otherwise sending error.
-        const currentDate = new Date();
-        console.log("CURRENT DATE:", currentDate);
-        // Normalize current date to UTC midnight for fair comparison
-        currentDate.setHours(0, 0, 0, 0);
-
-        console.log(
-            "CURRENT DATE AFTER NORMALIZING TO UTC MIDNIGHT:",
-            currentDate
-        );
-
-        console.log(
-            "NEW START DATE < CURRENT DATE ? = ",
-            newStartDate < currentDate
-        );
-
-        if (newStartDate < currentDate) {
+        if (newStartDate.isBefore(now)) {
             return next(
                 new AppError("Booking cannot be made for past dates", 400)
             );
         }
 
-        // Sending error if start date is greater than end date
-        if (newStartDate >= newEndDate) {
+        if (!newEndDate.isAfter(newStartDate)) {
             return next(new AppError("End date must be after start date", 400));
         }
 
-        // Checking if the start date is more than three months from today
-        const maxStartDate = new Date();
-        maxStartDate.setMonth(maxStartDate.getMonth() + 3); // Adding 3 months to today's date
-
-        if (newStartDate > maxStartDate) {
+        const maxStartDate = now.add(3, "month");
+        if (newStartDate.isAfter(maxStartDate)) {
             return next(
                 new AppError(
                     "Start date cannot be more than three months from now",
@@ -506,30 +467,26 @@ router.post(
             );
         }
 
-        // Checking if the booking duration is longer than 3 months (90 days)
-        const maxBookingDuration = 90 * 24 * 60 * 60 * 1000; // 90 days in milliseconds
-        const bookingDuration = newEndDate - newStartDate;
-
+        const maxBookingDuration = 90; // 90 days
+        const bookingDuration = newEndDate.diff(newStartDate, "day");
         if (bookingDuration > maxBookingDuration) {
             return next(
                 new AppError("Booking duration cannot exceed 3 months", 400)
             );
         }
 
-        // Preventing booking for one's own campground
         if (campground.owner.equals(req.user._id)) {
             return next(
                 new AppError("You cannot book your own campground", 400)
             );
         }
 
-        // Checking for overlapping bookings with an accepted or pending status
         const overlappingBooking = await Booking.findOne({
             user: req.user._id,
             campground: id,
             status: { $in: ["pending", "accepted"] },
-            startDate: { $lt: newEndDate },
-            endDate: { $gt: newStartDate },
+            startDate: { $lt: newEndDate.toDate() },
+            endDate: { $gt: newStartDate.toDate() },
         });
 
         if (overlappingBooking) {
@@ -541,12 +498,11 @@ router.post(
             );
         }
 
-        // Creating a booking request
         const booking = new Booking({
             user: req.user._id,
             campground: id,
-            startDate: newStartDate,
-            endDate: newEndDate,
+            startDate: newStartDate.toDate(),
+            endDate: newEndDate.toDate(),
             status: "pending",
         });
 

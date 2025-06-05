@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useUser } from "../../contexts/userContext";
@@ -67,8 +68,8 @@ const CampgroundBookingPage = () => {
         try {
             const res = await api.post(`/campgrounds/${campgroundId}/booking`, {
                 booking: {
-                    startDate: startDate.toISOString(),
-                    endDate: endDate.toISOString(),
+                    startDate: dayjs(startDate).format("YYYY-MM-DD"),
+                    endDate: dayjs(endDate).format("YYYY-MM-DD"),
                 },
             });
             setMessage(
