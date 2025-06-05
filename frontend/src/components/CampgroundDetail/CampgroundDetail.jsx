@@ -14,7 +14,6 @@ import NotFound from "../NotFound/NotFound";
 import Modal from "../Modal/Modal";
 
 const CampgroundDetail = () => {
-    const { user } = useUser();
     const navigate = useNavigate();
     const location = useLocation();
     const { id } = useParams();

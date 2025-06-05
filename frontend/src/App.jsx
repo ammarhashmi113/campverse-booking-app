@@ -141,11 +141,7 @@ export default function App() {
                             {/* Campground Detail (least specific - putting LAST among campground routes) */}
                             <Route
                                 path="/campgrounds/:id"
-                                element={
-                                    <CampgroundDetail
-                                        key={user?._id || "guest"}
-                                    />
-                                }
+                                element={<CampgroundDetail />}
                             />
 
                             <Route

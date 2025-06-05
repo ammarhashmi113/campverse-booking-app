@@ -38,7 +38,7 @@ const NewlyAddedCamps = ({ limit = 6, title = "Newly Added Camps" }) => {
                 <div className="row g-4">
                     {newCamps.map((camp) => (
                         <div className="col-md-4" key={camp._id}>
-                            <div className="card h-100 shadow-sm">
+                            <div className="card h-100 shadow border-0 rounded-4">
                                 <img
                                     src={
                                         camp?.image ||

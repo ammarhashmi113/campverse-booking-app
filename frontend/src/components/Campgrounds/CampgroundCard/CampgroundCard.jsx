@@ -9,7 +9,7 @@ const CampgroundCard = ({ campground }) => {
             (reviews.length || 1)
     );
     return (
-        <div className="card mb-4 shadow rounded-4 overflow-hidden">
+        <div className="card mb-4 shadow border-0 rounded-4 overflow-hidden">
             <div className="row g-0">
                 {/* <div className="col-md-5">
                     <Link to={`/campgrounds/${campground._id}`}>

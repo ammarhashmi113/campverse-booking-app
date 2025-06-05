@@ -44,7 +44,7 @@ const CampgroundCard = ({
     }, [user, campground._id]);
 
     return (
-        <div className="card shadow-lg w-100 h-100">
+        <div className="card shadow border-0 w-100 h-100 rounded-4">
             <img
                 src={campground.image}
                 className="card-img-top img-fluid"

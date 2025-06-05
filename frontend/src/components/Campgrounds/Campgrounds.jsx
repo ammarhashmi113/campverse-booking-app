@@ -92,7 +92,7 @@ function Campgrounds({ apiPath, title, userLoading }) {
                             </div>
                         ) : (
                             <div className="mb-4">
-                                <div className="card shadow-sm border-0">
+                                <div className="card shadow border-0 rounded-4">
                                     <div className="card-body text-center">
                                         <h5 className="card-title">
                                             Join the adventure!
