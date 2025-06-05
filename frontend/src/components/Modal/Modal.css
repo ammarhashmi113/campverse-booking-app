@@ -1,0 +1,20 @@
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.custom-modal-content {
+    background: transparent; /* or any background you want */
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    position: relative;
+}

@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useUser } from "../../contexts/userContext";
 import api from "../../api/axiosConfig";
+import NewlyAddedCamps from "../NewlyAddedCamps/NewlyAddedCamps";
 
 const CampgroundBookingPage = () => {
     const [startDate, setStartDate] = useState(null);
@@ -86,108 +87,112 @@ const CampgroundBookingPage = () => {
     };
 
     return (
-        <div className="container my-5">
-            <div className="row justify-content-center g-4">
-                {/* Campground Preview */}
-                {campground && (
-                    <div className="col-md-8">
-                        <div className="card shadow-sm">
-                            <img
-                                src={
-                                    campground?.image ||
-                                    "/images/default-camp-image.png"
-                                }
-                                alt={campground.title}
-                                className="card-img-top"
-                                style={{
-                                    maxHeight: "300px",
-                                    objectFit: "cover",
-                                }}
-                            />
-                            <div className="card-body">
-                                <h4 className="card-title">
-                                    {campground.title}
-                                </h4>
-                                <p className="card-text text-muted mb-1">
-                                    {campground.location}
-                                </p>
-                                <p className="mb-0">
-                                    <strong>Price:</strong> ${campground.price}{" "}
-                                    / night
-                                </p>
-                                <p className="text-muted small mt-2">
-                                    {campground.description?.slice(0, 100)}...
-                                </p>
-                                <h4 className="mt-5 mb-4 text-center">
-                                    Book This Camp
-                                </h4>
-                                <form onSubmit={handleBooking}>
-                                    <div className="row mb-3">
-                                        <div className="col-md-6 d-flex flex-column">
-                                            <label className="form-label fw-medium mb-2 text-center">
-                                                Start Date
-                                            </label>
-                                            <DatePicker
-                                                selected={startDate}
-                                                onChange={(date) =>
-                                                    setStartDate(date)
-                                                }
-                                                selectsStart
-                                                startDate={startDate}
-                                                endDate={endDate}
-                                                minDate={new Date()}
-                                                className="form-control"
-                                                required
-                                            />
+        <>
+            <div className="container my-5">
+                <div className="row justify-content-center g-4">
+                    {/* Campground Preview */}
+                    {campground && (
+                        <div className="col-md-8">
+                            <div className="card shadow-sm">
+                                <img
+                                    src={
+                                        campground?.image ||
+                                        "/images/default-camp-image.png"
+                                    }
+                                    alt={campground.title}
+                                    className="card-img-top"
+                                    style={{
+                                        maxHeight: "300px",
+                                        objectFit: "cover",
+                                    }}
+                                />
+                                <div className="card-body">
+                                    <h4 className="card-title">
+                                        {campground.title}
+                                    </h4>
+                                    <p className="card-text text-muted mb-1">
+                                        {campground.location}
+                                    </p>
+                                    <p className="mb-0">
+                                        <strong>Price:</strong> $
+                                        {campground.price} / night
+                                    </p>
+                                    <p className="text-muted small mt-2">
+                                        {campground.description?.slice(0, 100)}
+                                        ...
+                                    </p>
+                                    <h4 className="mt-5 mb-4 text-center">
+                                        Book This Camp
+                                    </h4>
+                                    <form onSubmit={handleBooking}>
+                                        <div className="row mb-3">
+                                            <div className="col-md-6 d-flex flex-column">
+                                                <label className="form-label fw-medium mb-2 text-center">
+                                                    Start Date
+                                                </label>
+                                                <DatePicker
+                                                    selected={startDate}
+                                                    onChange={(date) =>
+                                                        setStartDate(date)
+                                                    }
+                                                    selectsStart
+                                                    startDate={startDate}
+                                                    endDate={endDate}
+                                                    minDate={new Date()}
+                                                    className="form-control"
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="col-md-6 d-flex flex-column mt-3 mt-md-0">
+                                                <label className="form-label fw-medium mb-2 text-center">
+                                                    End Date
+                                                </label>
+                                                <DatePicker
+                                                    selected={endDate}
+                                                    onChange={(date) =>
+                                                        setEndDate(date)
+                                                    }
+                                                    selectsEnd
+                                                    startDate={startDate}
+                                                    endDate={endDate}
+                                                    minDate={
+                                                        startDate || new Date()
+                                                    }
+                                                    className="form-control"
+                                                    required
+                                                />
+                                            </div>
                                         </div>
-                                        <div className="col-md-6 d-flex flex-column mt-3 mt-md-0">
-                                            <label className="form-label fw-medium mb-2 text-center">
-                                                End Date
-                                            </label>
-                                            <DatePicker
-                                                selected={endDate}
-                                                onChange={(date) =>
-                                                    setEndDate(date)
-                                                }
-                                                selectsEnd
-                                                startDate={startDate}
-                                                endDate={endDate}
-                                                minDate={
-                                                    startDate || new Date()
-                                                }
-                                                className="form-control"
-                                                required
-                                            />
-                                        </div>
-                                    </div>
 
-                                    <button
-                                        type="submit"
-                                        className="btn btn-primary w-100"
-                                        disabled={loading}
-                                    >
-                                        {loading
-                                            ? "Booking..."
-                                            : "Confirm Booking"}
-                                    </button>
+                                        <button
+                                            type="submit"
+                                            className="btn btn-primary w-100"
+                                            disabled={loading}
+                                        >
+                                            {loading
+                                                ? "Booking..."
+                                                : "Confirm Booking"}
+                                        </button>
 
-                                    {message && (
-                                        <div className="alert alert-success mt-3">
-                                            {message}
-                                        </div>
-                                    )}
-                                    {error && (
-                                        <div className="alert alert-danger mt-3">
-                                            {error}
-                                        </div>
-                                    )}
-                                </form>
+                                        {message && (
+                                            <div className="alert alert-success mt-3">
+                                                {message}
+                                            </div>
+                                        )}
+                                        {error && (
+                                            <div className="alert alert-danger mt-3">
+                                                {error}
+                                            </div>
+                                        )}
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
-        </div>
+            <NewlyAddedCamps limit={9} title={"Explore More"} />
+        </>
     );
 };
 

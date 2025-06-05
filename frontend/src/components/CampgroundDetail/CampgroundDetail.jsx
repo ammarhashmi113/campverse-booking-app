@@ -11,6 +11,7 @@ import CampgroundReviewsList from "./CampgroundReviewsList/CampgroundReviewsList
 import InteractiveReviewForm from "../InteractiveReviewForm/InteractiveReviewForm";
 import NewlyAddedCamps from "../NewlyAddedCamps/NewlyAddedCamps";
 import NotFound from "../NotFound/NotFound";
+import Modal from "../Modal/Modal";
 
 const CampgroundDetail = () => {
     const { user } = useUser();
@@ -93,7 +94,7 @@ const CampgroundDetail = () => {
 
     return (
         <>
-            <div className="CampgroundDetail">
+            <div className="CampgroundDetail ms-2 me-2">
                 <div>
                     <CampgroundCard
                         campground={campground}
@@ -111,25 +112,45 @@ const CampgroundDetail = () => {
 
                 <div>
                     {viewState.showReviewForm && (
-                        <InteractiveReviewForm
-                            campgroundId={campground._id}
-                            campgroundTitle={campground.title}
-                            reviews={reviews}
-                            onReviewAdded={() => {
-                                fetchCampground();
+                        <Modal
+                            show={viewState.showReviewForm}
+                            onClose={() =>
                                 setViewState((prev) => ({
                                     ...prev,
                                     showReviewForm: false,
-                                }));
-                            }}
-                        />
+                                }))
+                            }
+                        >
+                            <InteractiveReviewForm
+                                campgroundId={campground._id}
+                                campgroundTitle={campground.title}
+                                reviews={reviews}
+                                onReviewAdded={() => {
+                                    fetchCampground();
+                                    setViewState((prev) => ({
+                                        ...prev,
+                                        showReviewForm: false,
+                                    }));
+                                }}
+                            />
+                        </Modal>
                     )}
                     {viewState.showReviews && (
-                        <CampgroundReviewsList
-                            initialReviews={reviews}
-                            campground={campground}
-                            refreshCampground={fetchCampground}
-                        />
+                        <Modal
+                            show={viewState.showReviews}
+                            onClose={() =>
+                                setViewState((prev) => ({
+                                    ...prev,
+                                    showReviews: false,
+                                }))
+                            }
+                        >
+                            <CampgroundReviewsList
+                                initialReviews={reviews}
+                                campground={campground}
+                                refreshCampground={fetchCampground}
+                            />
+                        </Modal>
                     )}
                 </div>
 
