@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api/axiosConfig";
+import NewlyAddedCamps from "../../components/NewlyAddedCamps/NewlyAddedCamps";
 
 const HomePage = () => {
     const [newCamps, setNewCamps] = useState([]);
@@ -104,54 +105,7 @@ const HomePage = () => {
 
             {/* Newly Added Camps */}
             {!isLoading && (
-                <section className="py-5 bg-white">
-                    <div className="container">
-                        <h2 className="text-center mb-4">
-                            🌟 Newly Added Camps
-                        </h2>
-                        <div className="row g-4">
-                            {newCamps.campgrounds.map((camp) => (
-                                <div className="col-md-4" key={camp._id}>
-                                    <div className="card h-100 shadow-sm">
-                                        <img
-                                            src={
-                                                camp?.image ||
-                                                "/images/default-camp-image.png"
-                                            }
-                                            className="card-img-top"
-                                            alt={camp.title}
-                                            style={{
-                                                objectFit: "cover",
-                                                height: "200px",
-                                            }}
-                                        />
-                                        <div className="card-body d-flex flex-column">
-                                            <h5 className="card-title">
-                                                {camp.title}
-                                            </h5>
-                                            <p className="card-text text-muted mb-2">
-                                                {camp.location}
-                                            </p>
-                                            <p className="card-text">
-                                                {camp.description?.slice(
-                                                    0,
-                                                    100
-                                                )}
-                                                ...
-                                            </p>
-                                            <Link
-                                                to={`/campgrounds/${camp._id}`}
-                                                className="mt-auto btn btn-success"
-                                            >
-                                                View Campground
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
+                <NewlyAddedCamps limit={6} title={"Newly Added Camps"} />
             )}
 
             {/* More Campsites */}

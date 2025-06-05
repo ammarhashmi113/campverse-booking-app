@@ -1,13 +1,15 @@
 import "./CampgroundDetail.css";
 import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useUser } from "../../contexts/userContext";
+import { toast } from "react-toastify";
 import api from "../../api/axiosConfig";
+
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import CampgroundCard from "./CampgroundCard/CampgroundCard";
 import CampgroundReviewsList from "./CampgroundReviewsList/CampgroundReviewsList";
 import InteractiveReviewForm from "../InteractiveReviewForm/InteractiveReviewForm";
-import { useUser } from "../../contexts/userContext";
-import { toast } from "react-toastify";
+import NewlyAddedCamps from "../NewlyAddedCamps/NewlyAddedCamps";
 import NotFound from "../NotFound/NotFound";
 
 const CampgroundDetail = () => {
@@ -90,53 +92,57 @@ const CampgroundDetail = () => {
     if (!campground) return <NotFound />;
 
     return (
-        <div className="CampgroundDetail">
-            <div>
-                <CampgroundCard
-                    campground={campground}
-                    avgCampReview={avgCampReview}
-                    onEdit={() =>
-                        navigate(`/campgrounds/${campground._id}/edit`)
-                    }
-                    onDelete={() => setShowDeleteModal(true)}
-                    onToggleReviews={() => toggleView("reviews")}
-                    onToggleReviewForm={() => toggleView("form")}
-                    showReviews={viewState.showReviews}
-                    showReviewForm={viewState.showReviewForm}
+        <>
+            <div className="CampgroundDetail">
+                <div>
+                    <CampgroundCard
+                        campground={campground}
+                        avgCampReview={avgCampReview}
+                        onEdit={() =>
+                            navigate(`/campgrounds/${campground._id}/edit`)
+                        }
+                        onDelete={() => setShowDeleteModal(true)}
+                        onToggleReviews={() => toggleView("reviews")}
+                        onToggleReviewForm={() => toggleView("form")}
+                        showReviews={viewState.showReviews}
+                        showReviewForm={viewState.showReviewForm}
+                    />
+                </div>
+
+                <div>
+                    {viewState.showReviewForm && (
+                        <InteractiveReviewForm
+                            campgroundId={campground._id}
+                            campgroundTitle={campground.title}
+                            reviews={reviews}
+                            onReviewAdded={() => {
+                                fetchCampground();
+                                setViewState((prev) => ({
+                                    ...prev,
+                                    showReviewForm: false,
+                                }));
+                            }}
+                        />
+                    )}
+                    {viewState.showReviews && (
+                        <CampgroundReviewsList
+                            initialReviews={reviews}
+                            campground={campground}
+                            refreshCampground={fetchCampground}
+                        />
+                    )}
+                </div>
+
+                <ConfirmationModal
+                    show={showDeleteModal}
+                    message="Are you sure you want to delete this campground? This action cannot be undone."
+                    onCancel={() => setShowDeleteModal(false)}
+                    onConfirm={handleDelete}
                 />
             </div>
-
-            <div>
-                {viewState.showReviewForm && (
-                    <InteractiveReviewForm
-                        campgroundId={campground._id}
-                        campgroundTitle={campground.title}
-                        reviews={reviews}
-                        onReviewAdded={() => {
-                            fetchCampground();
-                            setViewState((prev) => ({
-                                ...prev,
-                                showReviewForm: false,
-                            }));
-                        }}
-                    />
-                )}
-                {viewState.showReviews && (
-                    <CampgroundReviewsList
-                        initialReviews={reviews}
-                        campground={campground}
-                        refreshCampground={fetchCampground}
-                    />
-                )}
-            </div>
-
-            <ConfirmationModal
-                show={showDeleteModal}
-                message="Are you sure you want to delete this campground? This action cannot be undone."
-                onCancel={() => setShowDeleteModal(false)}
-                onConfirm={handleDelete}
-            />
-        </div>
+            {/* Newly Added Camps */}
+            <NewlyAddedCamps limit={9} title={"Explore More"} />
+        </>
     );
 };
 
