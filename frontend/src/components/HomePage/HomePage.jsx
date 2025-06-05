@@ -15,7 +15,6 @@ const HomePage = () => {
                     "/campgrounds?sort=latest&limit=6"
                 );
                 setNewCamps(response.data);
-                console.log(response.data);
                 setIsLoading(false);
             } catch (err) {
                 console.error("Failed to load new campgrounds", err);
@@ -113,7 +112,6 @@ const HomePage = () => {
                         <div className="row g-4">
                             {newCamps.campgrounds.map((camp) => (
                                 <div className="col-md-4" key={camp._id}>
-                                    {console.log(camp.image)}
                                     <div className="card h-100 shadow-sm">
                                         <img
                                             src={

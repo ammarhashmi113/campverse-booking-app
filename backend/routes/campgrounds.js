@@ -438,11 +438,15 @@ router.post(
         }
 
         // Converting to date objects
-        const newStartDate = new Date(startDate);
-        const newEndDate = new Date(endDate);
+        let newStartDate = new Date(startDate);
+        let newEndDate = new Date(endDate);
+
+        // Normalize both dates to midnight in local time (or UTC) to avoid timezone issues
+        newStartDate = new Date(newStartDate.toDateString());
+        newEndDate = new Date(newEndDate.toDateString());
 
         // Checking that the start date is not in the past, otherwise sending error.
-        const currentDate = new Date();
+        const currentDate = new Date(new Date().toDateString());
         if (newStartDate < currentDate) {
             return next(
                 new AppError("Booking cannot be made for past dates", 400)
