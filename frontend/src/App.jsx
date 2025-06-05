@@ -26,6 +26,7 @@ import RegisterForm from "./components/RegisterForm/RegisterForm";
 import AddCampgroundForm from "./components/AddCampgroundForm/AddCampgroundForm";
 import EditCampgroundForm from "./components/EditCampgroundForm/EditCampgroundForm";
 import CampgroundBookingPage from "./components/CampgroundBookingPage/CampgroundBookingPage";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import NotFound from "./components/NotFound/NotFound";
 
 export default function App() {
@@ -80,6 +81,7 @@ export default function App() {
 
     return (
         <Router>
+            <ScrollToTop />
             <UserContext.Provider value={{ user, setUser }}>
                 <div className="d-flex flex-column min-vh-100">
                     <Navbar setUser={setUser} userLoading={userLoading} />

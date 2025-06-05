@@ -41,6 +41,7 @@ const CampgroundDetail = () => {
         try {
             const res = await api.get(`/campgrounds/${id}`);
             setCampground(res.data);
+            setLoading(false);
         } catch (err) {
             console.error("Error fetching campground:", err);
         } finally {
