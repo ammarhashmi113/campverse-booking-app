@@ -454,8 +454,8 @@ router.post(
         );
 
         // Normalize both to UTC midnight
-        newStartDate.setUTCHours(0, 0, 0, 0);
-        newEndDate.setUTCHours(0, 0, 0, 0);
+        newStartDate.setHours(0, 0, 0, 0);
+        newEndDate.setHours(0, 0, 0, 0);
 
         console.log(
             "NEW START DATE AFTER NORMALIZING TO UTC MIDNIGHT:",
@@ -470,7 +470,7 @@ router.post(
         const currentDate = new Date();
         console.log("CURRENT DATE:", currentDate);
         // Normalize current date to UTC midnight for fair comparison
-        currentDate.setUTCHours(0, 0, 0, 0);
+        currentDate.setHours(0, 0, 0, 0);
 
         console.log(
             "CURRENT DATE AFTER NORMALIZING TO UTC MIDNIGHT:",
