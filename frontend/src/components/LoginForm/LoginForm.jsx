@@ -1,3 +1,4 @@
+import "./LoginForm.css";
 import { useState, useEffect } from "react";
 import api from "../../api/axiosConfig";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -59,75 +60,85 @@ const LoginForm = ({ fetchCurrentUser }) => {
     return (
         <>
             <ToastContainer style={{ marginTop: "4rem" }} />
-            <div className="container mt-5 d-flex justify-content-center">
-                <div
-                    className="card shadow border-0 rounded-4 overflow-hidden"
-                    style={{ maxWidth: "400px", width: "100%" }}
-                >
-                    <img
-                        src="https://img.freepik.com/free-photo/camping-tents-pine-trees-with-sunlight-pang-ung-lake-mae-hong-son-thailand_335224-931.jpg?t=st=1745577085~exp=1745580685~hmac=9ebaf89529c59c08e8d1a51dec68b40b6540f00b0c5ffc6164c27c5048c3e321&w=996"
-                        alt="campground"
-                        className="card-img-top"
-                        style={{ height: "200px", objectFit: "cover" }}
-                    />
-                    <div className="card-body">
-                        <h3 className="card-title text-center mb-3">Login</h3>
-                        {error && (
-                            <div className="alert alert-danger">{error}</div>
-                        )}
-                        <form onSubmit={handleSubmit}>
-                            <div className="mb-3">
-                                <label htmlFor="email" className="form-label">
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    placeholder="Enter your email"
-                                    required
-                                />
-                            </div>
-                            <div className="mb-3">
-                                <label
-                                    htmlFor="password"
-                                    className="form-label"
-                                >
-                                    Password
-                                </label>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    id="password"
-                                    name="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    placeholder="Enter your password"
-                                    required
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                className="btn btn-success w-100"
-                                disabled={loading}
-                            >
-                                {loading ? (
-                                    <div
-                                        className="spinner-border spinner-border-sm"
-                                        role="status"
+            <div className="login-page">
+                <div className="overlay" />
+                <div className="container d-flex justify-content-center align-items-center vh-100">
+                    <div
+                        className="card auth-card text-white shadow border-0 rounded-4 overflow-hidden"
+                        style={{ maxWidth: "400px", width: "100%", zIndex: 1 }}
+                    >
+                        <img
+                            src="https://img.freepik.com/free-photo/camping-tents-pine-trees-with-sunlight-pang-ung-lake-mae-hong-son-thailand_335224-931.jpg?t=st=1745577085~exp=1745580685~hmac=9ebaf89529c59c08e8d1a51dec68b40b6540f00b0c5ffc6164c27c5048c3e321&w=996"
+                            alt="campground"
+                            className="card-img-top"
+                            style={{ height: "200px", objectFit: "cover" }}
+                        />
+                        <div className="card-body">
+                            <h3 className="card-title text-center mb-3">
+                                Login
+                            </h3>
+                            {error && (
+                                <div className="alert alert-danger">
+                                    {error}
+                                </div>
+                            )}
+                            <form onSubmit={handleSubmit}>
+                                <div className="mb-3">
+                                    <label
+                                        htmlFor="email"
+                                        className="form-label"
                                     >
-                                        <span className="visually-hidden">
-                                            Loading...
-                                        </span>
-                                    </div>
-                                ) : (
-                                    "Login"
-                                )}
-                            </button>
-                        </form>
+                                        Email
+                                    </label>
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        id="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        placeholder="Enter your email"
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label
+                                        htmlFor="password"
+                                        className="form-label"
+                                    >
+                                        Password
+                                    </label>
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        id="password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        placeholder="Enter your password"
+                                        required
+                                    />
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="btn btn-glass w-50 px-4 py-2 d-block mx-auto"
+                                    disabled={loading}
+                                >
+                                    {loading ? (
+                                        <div
+                                            className="spinner-border spinner-border-sm"
+                                            role="status"
+                                        >
+                                            <span className="visually-hidden">
+                                                Loading...
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        "Login"
+                                    )}
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

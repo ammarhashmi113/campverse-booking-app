@@ -1,5 +1,4 @@
 // src/components/ConfirmationModal.jsx
-import React from "react";
 
 const ConfirmationModal = ({ show, message, onCancel, onConfirm }) => {
     return (

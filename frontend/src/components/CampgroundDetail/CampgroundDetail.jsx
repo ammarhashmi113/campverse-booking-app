@@ -1,7 +1,6 @@
 import "./CampgroundDetail.css";
 import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useUser } from "../../contexts/userContext";
 import { toast } from "react-toastify";
 import api from "../../api/axiosConfig";
 
