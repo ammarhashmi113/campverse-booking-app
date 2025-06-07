@@ -8,19 +8,11 @@ const CampgroundCard = ({ campground }) => {
         reviews.reduce((acc, review) => acc + review.rating, 0) /
             (reviews.length || 1)
     );
+
     return (
         <div className="card mb-4 shadow border-0 rounded-4 overflow-hidden">
             <div className="row g-0">
-                {/* <div className="col-md-5">
-                    <Link to={`/campgrounds/${campground._id}`}>
-                        <img
-                            src={campground.image}
-                            alt={campground.title}
-                            className="img-fluid h-100 object-fit-cover"
-                            style={{ objectFit: "cover", height: "100%" }}
-                        />
-                    </Link>
-                </div> */}
+                {/* Image Section */}
                 <div className="col-md-5">
                     <Link to={`/campgrounds/${campground._id}`}>
                         <div className="campground-card-img-container">
@@ -32,33 +24,36 @@ const CampgroundCard = ({ campground }) => {
                         </div>
                     </Link>
                 </div>
-                <div className="col-md-7 d-flex flex-column justify-content-between p-3">
+
+                {/* Content Section */}
+                <div className="col-md-7 d-flex flex-column justify-content-between p-4">
                     <div>
-                        <h5 className="card-title fw-bold">
-                            {campground.title}
-                        </h5>
-                        <p className="text-muted mb-2">
-                            <i className="bi bi-geo-alt-fill me-1"></i>
-                            {campground.location}
-                        </p>
+                        <h4 className="fw-bold mb-2">{campground.title}</h4>
+                        <div className="text-muted mb-3 d-flex align-items-center">
+                            <i className="bi bi-geo-alt-fill me-2 text-primary"></i>
+                            <span>{campground.location}</span>
+                        </div>
                         <p
-                            className="card-text text-truncate"
-                            style={{ maxWidth: "100%" }}
+                            className="text-secondary mb-0"
+                            style={{
+                                maxHeight: "4.5em",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                            }}
                             title={campground.description}
                         >
                             {campground.description}
                         </p>
                     </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="mt-3">
-                            <Link
-                                to={`/campgrounds/${campground._id}`}
-                                className="btn btn-outline-success w-auto rounded-pill mx-auto"
-                            >
-                                View Campground
-                            </Link>
-                        </div>
-                        <div className="d-flex flex-column justify-content-center pt-3">
+
+                    <div className="d-flex justify-content-between align-items-center mt-4">
+                        <Link
+                            to={`/campgrounds/${campground._id}`}
+                            className="btn btn-outline-primary rounded-pill px-4"
+                        >
+                            View Details
+                        </Link>
+                        <div className="text-end">
                             <StarRating rating={avgCampReview} />
                         </div>
                     </div>

@@ -82,7 +82,7 @@ export default function App() {
     return (
         <Router>
             <ScrollToTop />
-            <UserContext.Provider value={{ user, setUser }}>
+            <UserContext.Provider value={{ user, setUser, userLoading }}>
                 <div className="d-flex flex-column min-vh-100">
                     <Navbar setUser={setUser} userLoading={userLoading} />
                     <ToastContainer style={{ marginTop: "4rem" }} />
@@ -125,8 +125,23 @@ export default function App() {
                                 path="/campgrounds/:id/edit"
                                 element={
                                     userLoading ? (
-                                        <div className="container mt-4">
-                                            Checking credentials...
+                                        <div
+                                            className="container mt-5 d-flex justify-content-center align-items-center"
+                                            style={{ minHeight: "50vh" }}
+                                        >
+                                            <div className="text-center">
+                                                <div
+                                                    className="spinner-border text-primary"
+                                                    role="status"
+                                                >
+                                                    <span className="visually-hidden">
+                                                        Checking Credentials...
+                                                    </span>
+                                                </div>
+                                                <div className="mt-2">
+                                                    Checking Credentials...
+                                                </div>
+                                            </div>
                                         </div>
                                     ) : (
                                         <EditCampgroundForm />

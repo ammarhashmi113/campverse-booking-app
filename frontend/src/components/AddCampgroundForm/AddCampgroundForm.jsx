@@ -1,28 +1,13 @@
-import { useState, useEffect } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import "./AddCampgroundForm.css";
+import { useState } from "react";
+import { Navigate } from "react-router-dom";
 import api from "../../api/axiosConfig";
 import CampgroundForm from "../CampgroundForm/CampgroundForm";
 import { useUser } from "../../contexts/userContext";
 
-// For react toast messages
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 const AddCampgroundForm = () => {
-    const navigate = useNavigate();
-    const { user } = useUser();
+    const { user, userLoading } = useUser();
     const [addFormSubmitted, setAddFormSubmitted] = useState(false);
-
-    // Redirect cases
-    useEffect(() => {
-        if (!user)
-            navigate("/login", {
-                state: {
-                    message: "Please login to add your campground",
-                    type: "info",
-                },
-            });
-    }, []);
 
     const [formData, setFormData] = useState({
         title: "",
@@ -40,16 +25,42 @@ const AddCampgroundForm = () => {
                     price: parseFloat(formData.price),
                 },
             });
-            console.log("SETTING FORM SUBMITTED AS", res);
             setAddFormSubmitted(res);
         } catch (err) {
             console.error("Error adding campground:", err);
         }
     };
 
+    if (userLoading) {
+        return (
+            <div
+                className="container mt-5 d-flex justify-content-center align-items-center"
+                style={{ minHeight: "50vh" }}
+            >
+                <div className="text-center">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading</span>
+                    </div>
+                    <div className="mt-2">Loading</div>
+                </div>
+            </div>
+        );
+    }
+
+    if (!user) {
+        return (
+            <Navigate
+                to="/login"
+                replace
+                state={{
+                    message: "Please login to add your campground",
+                    type: "info",
+                }}
+            />
+        );
+    }
+
     if (addFormSubmitted !== false) {
-        const id = addFormSubmitted.data._id;
-        console.log(id);
         return (
             <Navigate
                 to={`/campgrounds/my-campgrounds`}
@@ -63,15 +74,19 @@ const AddCampgroundForm = () => {
     }
 
     return (
-        <div className="container mt-4">
-            <h2>Add New Campground</h2>
-            <CampgroundForm
-                formData={formData}
-                setFormData={setFormData}
-                onSubmit={handleSubmit}
-                isEdit={false}
-            />
-        </div>
+        <>
+            <div className="background-image"></div>
+
+            <div className="glass-container container mt-5 p-4 rounded">
+                <h2 className="text-white text-center mb-4">Host Your Camp</h2>
+                <CampgroundForm
+                    formData={formData}
+                    setFormData={setFormData}
+                    onSubmit={handleSubmit}
+                    isEdit={false}
+                />
+            </div>
+        </>
     );
 };
 

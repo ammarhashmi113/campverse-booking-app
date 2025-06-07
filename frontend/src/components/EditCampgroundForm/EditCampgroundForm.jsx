@@ -18,6 +18,7 @@ const EditCampgroundForm = () => {
     });
     const [campgroundOwnerId, setCampgroundOwnerId] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [editing, setEditing] = useState(false);
     const [unauthorized, setUnauthorized] = useState(false);
     const [editFormSubmitted, setEditFormSubmitted] = useState(false);
 
@@ -62,6 +63,7 @@ const EditCampgroundForm = () => {
     }, [loading, user, campgroundOwnerId]);
 
     const handleSubmit = async () => {
+        setEditing(true);
         try {
             await api.patch(`/campgrounds/${id}`, {
                 campground: {
@@ -70,8 +72,10 @@ const EditCampgroundForm = () => {
                 },
             });
             setEditFormSubmitted(true);
+            setEditing(false);
         } catch (err) {
             console.error("Error updating campground:", err);
+            setEditing(false);
         }
     };
 
@@ -115,20 +119,61 @@ const EditCampgroundForm = () => {
     }
 
     if (loading) {
-        return <div className="container mt-4">Loading campground data...</div>;
+        return (
+            <div
+                className="container mt-5 d-flex justify-content-center align-items-center"
+                style={{ minHeight: "50vh" }}
+            >
+                <div className="text-center">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading</span>
+                    </div>
+                    <div className="mt-2">Loading</div>
+                </div>
+            </div>
+        );
     }
 
-    // Render form
+    if (editing) {
+        return (
+            <div
+                className="container mt-5 d-flex justify-content-center align-items-center"
+                style={{ minHeight: "50vh" }}
+            >
+                <div className="text-center">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Editing</span>
+                    </div>
+                    <div className="mt-2">Editing</div>
+                </div>
+            </div>
+        );
+    }
+
+    // Render form with glassmorphism styling
     return (
-        <div className="container mt-4">
-            <h2>Edit Campground</h2>
-            <CampgroundForm
-                formData={formData}
-                setFormData={setFormData}
-                onSubmit={handleSubmit}
-                isEdit={true}
-            />
-        </div>
+        <>
+            <div className="background-image"></div>
+
+            <div className="glass-container container mt-5 p-4 rounded">
+                <h2 className="text-white mb-4">Edit Campground</h2>
+                <CampgroundForm
+                    formData={formData}
+                    setFormData={setFormData}
+                    onSubmit={handleSubmit}
+                    isEdit={true}
+                    editing={editing}
+                    setEditing={setEditing}
+                />
+            </div>
+
+            <style>{`
+        .background-image {
+          background-image: url('${formData.image}');
+          
+        }
+      `}</style>
+        </>
     );
 };
 

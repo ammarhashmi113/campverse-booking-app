@@ -88,7 +88,20 @@ const CampgroundDetail = () => {
         }
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading)
+        return (
+            <div
+                className="container mt-5 d-flex justify-content-center align-items-center"
+                style={{ minHeight: "50vh" }}
+            >
+                <div className="text-center">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                    <div className="mt-2">Loading</div>
+                </div>
+            </div>
+        );
     if (!campground) return <NotFound />;
 
     return (

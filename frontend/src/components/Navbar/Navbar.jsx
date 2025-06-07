@@ -43,7 +43,7 @@ function Navbar({ setUser, userLoading }) {
                             <Link to="/campgrounds">Explore</Link>
                         </li>
                         <li>
-                            <Link to="/campgrounds/new">Add New</Link>
+                            <Link to="/campgrounds/new">Host Your Camp</Link>
                         </li>
                         <li>
                             <Link to="/campgrounds/my-campgrounds">

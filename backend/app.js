@@ -16,13 +16,33 @@ app.use(methodOverride("_method")); // for form data
 app.use(express.json()); // for json data
 app.use(helmet()); // for security headers
 
-const limiter = rateLimit({
+const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per windowMs
+    max: 100,
     standardHeaders: true,
     legacyHeaders: false,
+    skip: (req) => req.method === "OPTIONS",
+    handler: (req, res) => {
+        res.status(429).json({
+            status: "fail",
+            error: "Too many requests from this IP, please try again later.",
+        });
+    },
 });
-app.use(limiter);
+
+const generalLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 200,
+    standardHeaders: true,
+    legacyHeaders: false,
+    skip: (req) => req.method === "OPTIONS",
+    handler: (req, res) => {
+        res.status(429).json({
+            status: "fail",
+            error: "Too many requests from this IP, please try again later.",
+        });
+    },
+});
 
 const allowedOrigins = [
     "https://campverse-booking-app.vercel.app", // Vercel frontend URL
@@ -46,10 +66,10 @@ app.get("/api/health", (req, res) => {
 });
 
 // Authentication Routes
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authLimiter, authRoutes);
 
 // Campground Routes
-app.use("/api", campgroundRoutes);
+app.use("/api", generalLimiter, campgroundRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

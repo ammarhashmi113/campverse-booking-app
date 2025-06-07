@@ -96,10 +96,10 @@ const CampgroundForm = ({
         <form onSubmit={handleSubmit} className="needs-validation" noValidate>
             {/* Title */}
             <div className="mb-3">
-                <label className="form-label">Title</label>
+                <label className="form-label text-white">Title</label>
                 <input
                     name="title"
-                    className={`form-control ${
+                    className={`text-white form-control ${
                         touched.title
                             ? validationState.title
                                 ? "is-valid"
@@ -111,7 +111,7 @@ const CampgroundForm = ({
                     required
                 />
                 {touched.title && !validationState.title && (
-                    <div className="invalid-feedback">
+                    <div className="invalid-feedback text-warning">
                         Please provide a title.
                     </div>
                 )}
@@ -119,10 +119,10 @@ const CampgroundForm = ({
 
             {/* Location */}
             <div className="mb-3">
-                <label className="form-label">Location</label>
+                <label className="form-label text-white">Location</label>
                 <input
                     name="location"
-                    className={`form-control ${
+                    className={`text-white form-control ${
                         touched.location
                             ? validationState.location
                                 ? "is-valid"
@@ -134,7 +134,7 @@ const CampgroundForm = ({
                     required
                 />
                 {touched.location && !validationState.location && (
-                    <div className="invalid-feedback">
+                    <div className="invalid-feedback text-warning">
                         Please provide a location.
                     </div>
                 )}
@@ -142,10 +142,10 @@ const CampgroundForm = ({
 
             {/* Image */}
             <div className="mb-3">
-                <label className="form-label">Image URL</label>
+                <label className="form-label text-white">Image URL</label>
                 <input
                     name="image"
-                    className={`form-control ${
+                    className={`text-white form-control ${
                         touched.image
                             ? validationState.image
                                 ? "is-valid"
@@ -157,7 +157,7 @@ const CampgroundForm = ({
                     required
                 />
                 {touched.image && !validationState.image && (
-                    <div className="invalid-feedback">
+                    <div className="invalid-feedback text-warning">
                         Please provide an image URL.
                     </div>
                 )}
@@ -165,13 +165,13 @@ const CampgroundForm = ({
 
             {/* Price */}
             <div className="mb-3">
-                <label className="form-label">Price</label>
+                <label className="form-label text-white">Price</label>
                 <div className="input-group">
                     <span className="input-group-text">$</span>
                     <input
                         type="number"
                         name="price"
-                        className={`form-control ${
+                        className={`text-white form-control ${
                             touched.price
                                 ? validationState.price
                                     ? "is-valid"
@@ -193,10 +193,10 @@ const CampgroundForm = ({
 
             {/* Description */}
             <div className="mb-3">
-                <label className="form-label">Description</label>
+                <label className="form-label text-white">Description</label>
                 <textarea
                     name="description"
-                    className={`form-control ${
+                    className={`text-white form-control ${
                         touched.description
                             ? validationState.description
                                 ? "is-valid"
@@ -209,7 +209,7 @@ const CampgroundForm = ({
                     rows="4"
                 ></textarea>
                 {touched.description && !validationState.description && (
-                    <div className="invalid-feedback">
+                    <div className="invalid-feedback text-warning">
                         Please provide a description.
                     </div>
                 )}
@@ -218,9 +218,10 @@ const CampgroundForm = ({
             <button type="submit" className="btn btn-success rounded-pill">
                 {isEdit ? "Update" : "Add"}
             </button>
+
             <Link to="/campgrounds">
                 <button
-                    className="btn btn-light ms-2 rounded-pill"
+                    className="btn btn-light ms-2 rounded-pill text-white"
                     style={{ display: "inline-block" }}
                 >
                     All Camps
