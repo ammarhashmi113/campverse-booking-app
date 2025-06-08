@@ -15,7 +15,7 @@ const HomePage = () => {
                 className="text-white text-center d-flex align-items-center"
                 style={{
                     background:
-                        "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/campgroundHomepage.jpg') center/cover no-repeat",
+                        "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/campground-homepage.jpg') center/cover no-repeat",
                     minHeight: "100vh",
                 }}
             >

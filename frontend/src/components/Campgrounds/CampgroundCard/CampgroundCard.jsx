@@ -10,7 +10,7 @@ const CampgroundCard = ({ campground }) => {
     );
 
     return (
-        <div className="card mb-4 shadow border-0 rounded-4 overflow-hidden">
+        <div className="card mb-4 ms-1 me-1 shadow border-0 rounded-4 overflow-hidden">
             <div className="row g-0">
                 {/* Image Section */}
                 <div className="col-md-5">
