@@ -91,7 +91,7 @@ function Campgrounds({ apiPath, title, userLoading }) {
 
     const renderAuthCard = () => (
         <div className="mb-4">
-            <div className="card border-0 rounded-4 shadow-sm">
+            <div className="card border-0 rounded-4 shadow">
                 <div className="card-body text-center">
                     <h5 className="card-title fw-bold">Join the Adventure</h5>
                     <p className="card-text">

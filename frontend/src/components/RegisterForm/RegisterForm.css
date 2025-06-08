@@ -1,7 +1,3 @@
-body.noscroll {
-    overflow: hidden;
-}
-
 .register-page {
     background-image: url("/images/register-background-image.jpg");
     background-size: cover;

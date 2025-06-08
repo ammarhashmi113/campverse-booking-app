@@ -44,11 +44,6 @@ const RegisterForm = ({ fetchCurrentUser }) => {
 
     useEffect(() => {
         document.title = "Campverse - Register";
-        document.body.classList.add("noscroll");
-
-        return () => {
-            document.body.classList.remove("noscroll"); // cleanup on unmount
-        };
     }, []);
 
     return (

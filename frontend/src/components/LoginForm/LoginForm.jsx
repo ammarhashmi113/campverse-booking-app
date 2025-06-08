@@ -46,11 +46,6 @@ const LoginForm = ({ fetchCurrentUser }) => {
 
     useEffect(() => {
         document.title = "Campverse - Login";
-        document.body.classList.add("noscroll");
-
-        return () => {
-            document.body.classList.remove("noscroll"); // cleanup on unmount
-        };
     }, []);
 
     useEffect(() => {
