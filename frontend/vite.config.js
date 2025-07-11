@@ -6,6 +6,7 @@ export default defineConfig({
     plugins: [react()],
     // instead of calling http://localhost:3000/api/campgrounds, we'll call /api/campgrounds from our frontend and Vite will automatically forward it to the backend.
     server: {
+        host: true,
         port: 5173,
         proxy: {
             "/api": "http://localhost:3000",
