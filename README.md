@@ -1,3 +1,15 @@
+## ⚠️ Backend Hosting Status
+
+The backend APIs are currently offline due to free-tier limits on Render. You can still:
+
+- Explore the fully functional frontend hosted on Vercel
+- Review all backend logic, routes, and authentication in the `backend/` folder
+- Run the fullstack app locally by following the instructions below
+
+This is a temporary issue and will be resolved once stable hosting is arranged.
+
+---
+
 # 🏕️ Campverse - Full-Stack Campground Booking App
 
 Campverse is a full-stack web application where users can host and book campgrounds. It features JWT-based user authentication, role-based access control, booking management, reviews, and responsive UI with toast notifications and route protection. Built using modern web technologies, Campverse provides both a robust backend and an intuitive frontend for a seamless user experience.
@@ -5,7 +17,7 @@ Campverse is a full-stack web application where users can host and book campgrou
 ## 🌍 Live Links
 
 -   🌐 [Live App](https://campverse-booking-app.vercel.app)
--   🛠️ [Backend API](https://campverse-booking-app.onrender.com)
+-   🛠️ [Backend API (currently unavailable because of usage limits)](https://campverse-booking-app.onrender.com)
 
 ---
 
