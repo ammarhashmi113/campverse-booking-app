@@ -48,7 +48,7 @@ const FirstVisitModal = () => {
                     You can still explore the interface or check out the full
                     code on{" "}
                     <a
-                        href="https://github.com/ammarhashmi113/campverse"
+                        href="https://github.com/ammarhashmi113/campverse-booking-app"
                         className="text-decoration-underline text-dark fw-semibold"
                         target="_blank"
                         rel="noopener noreferrer"
