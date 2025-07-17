@@ -11,6 +11,21 @@ const FirstVisitModal = () => {
         }
     }, []);
 
+    useEffect(() => {
+        if (showModal) {
+            // Lock scroll
+            document.body.style.overflow = "hidden";
+        } else {
+            // Unlock scroll
+            document.body.style.overflow = "auto";
+        }
+
+        return () => {
+            // Cleanup in case component unmounts
+            document.body.style.overflow = "auto";
+        };
+    }, [showModal]);
+
     if (!showModal) return null;
 
     return (
