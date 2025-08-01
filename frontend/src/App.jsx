@@ -28,7 +28,7 @@ import EditCampgroundForm from "./components/EditCampgroundForm/EditCampgroundFo
 import CampgroundBookingPage from "./components/CampgroundBookingPage/CampgroundBookingPage";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import NotFound from "./components/NotFound/NotFound";
-import FirstVisitModal from "./components/FirstVisitModal/FirstVisitModal";
+// import FirstVisitModal from "./components/FirstVisitModal/FirstVisitModal";
 
 export default function App() {
     const [user, setUser] = useState(null);
@@ -83,8 +83,8 @@ export default function App() {
     return (
         <Router>
             <ScrollToTop />
-            {/* Showing backend API down notice modal for first-time visitors */}
-            <FirstVisitModal />
+            {/* I hit Render's API free usage limit and had to show backend API down notice modal for first-time visitors */}
+            {/* <FirstVisitModal /> */}
             <UserContext.Provider value={{ user, setUser, userLoading }}>
                 <div className="d-flex flex-column min-vh-100">
                     <Navbar setUser={setUser} userLoading={userLoading} />
