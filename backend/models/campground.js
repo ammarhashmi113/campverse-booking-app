@@ -7,6 +7,8 @@ const campgroundSchema = new Schema(
         title: {
             type: String,
             required: true,
+            minlength: 5,
+            maxlength: 50,
         },
         location: {
             type: String,
@@ -19,6 +21,8 @@ const campgroundSchema = new Schema(
         description: {
             type: String,
             required: true,
+            minlength: 50,
+            maxlength: 500,
         },
         image: {
             type: String,
