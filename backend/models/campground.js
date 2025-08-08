@@ -8,7 +8,7 @@ const campgroundSchema = new Schema(
             type: String,
             required: true,
             minlength: 5,
-            maxlength: 50,
+            maxlength: 100,
         },
         location: {
             type: String,
@@ -23,7 +23,7 @@ const campgroundSchema = new Schema(
             type: String,
             required: true,
             minlength: 50,
-            maxlength: 500,
+            maxlength: 1000,
         },
         image: {
             type: String,

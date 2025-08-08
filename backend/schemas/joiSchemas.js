@@ -10,11 +10,11 @@ Joi.objectId = JoiObjectId;
 // Campground Validation
 const campgroundSchemaJoi = Joi.object({
     campground: Joi.object({
-        title: Joi.string().required(),
-        location: Joi.string().required(),
+        title: Joi.string().min(5).max(100).required(),
+        location: Joi.string().max(100).required(),
         image: Joi.string().uri().required(),
-        price: Joi.number().required().min(0),
-        description: Joi.string().required(),
+        price: Joi.number().min(0).required(),
+        description: Joi.string().max(1000).required(),
         owner: Joi.objectId().required(),
     }).required(),
 });
